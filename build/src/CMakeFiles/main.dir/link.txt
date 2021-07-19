@@ -1,0 +1,1 @@
+g++    -g    -rdynamic CMakeFiles/main.dir/main.cpp.o  -o ../../bin/main   -L/home/akashleena/pointcloud/lib 

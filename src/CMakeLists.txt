@@ -1,0 +1,17 @@
+ADD_EXECUTABLE( main main.cpp )
+
+
+FIND_PACKAGE( PCL REQUIRED )
+
+#list(REMOVE_ITEM PCL_LIBRARIES "vtkproj4") # use this in Ubuntu 16.04
+
+FIND_PACKAGE( OpenCV REQUIRED )
+
+
+ADD_DEFINITIONS( ${PCL_DEFINITIONS} )
+INCLUDE_DIRECTORIES( ${PCL_INCLUDE_DIRS}  )
+LINK_LIBRARIES( ${PCL_LIBRARY_DIRS} )
+
+ADD_EXECUTABLE( generate_pointcloud generatePointCloud.cpp )
+TARGET_LINK_LIBRARIES( generate_pointcloud ${OpenCV_LIBS} 
+    ${PCL_LIBRARIES} )

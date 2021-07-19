@@ -31,3 +31,5 @@ To run the code
 $cd ../bin
 $./generate_pointcloud
 ```
+## Video
+https://drive.google.com/file/d/1yRUUmSuueBKXF9rIjQGhgvPs_rwIBOK2/view?usp=sharing

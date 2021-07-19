@@ -1,3 +1,11 @@
+/* © Copyright HoloSuit Pte Ltd. All rights reserved. This software is released as a submission to Robotics Software Engineer post
+ *  Any permission to use it shall be granted in writing. Requests shall be addressed to Akasheena in akash13leena@gmail.com
+ *
+ * Author: Akashleena Sarkar
+ *
+ *==================================================================================================
+*/
+
 #include <iostream>
 #include <string>
  // opencv library
@@ -6,19 +14,26 @@
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 #include <pcl/io/ply_io.h>
+#include "pcvisualizer.hpp"
 using namespace std;
  
  // Define the point cloud type
 typedef pcl::PointXYZRGBA PointT;
 typedef pcl::PointCloud<PointT> PointCloud; 
- 
+//struct dataType { std::vector<Point3f> point; int red; int green; int blue; };
+//typedef dataType SpacePoint;
+//vector<SpacePoint> pointCloud;
+
  // camera internal reference
 const double camera_factor=5000;
 const double camera_cx=325.5;
 const double camera_cy=253.5;
 const double camera_fx=518.0;
 const double camera_fy=519.0;
- 
+
+//function prototype
+pcl::visualization::PCLVisualizer::Ptr createViewer (pcl::PointCloud<pcl::PointXYZ>::ConstPtr);  
+
  // main function
 int main(int argc,char** argv)
 {
@@ -65,28 +80,29 @@ int main(int argc,char** argv)
 	cloud->is_dense = false;
  	pcl::io::savePLYFileASCII ("output.ply", *cloud);
 	pcl::io::savePCDFile("./pointcloud.pcd", *cloud);
-
 	
-/*struct dataType { Point3d point; int red; int green; int blue; };
-typedef dataType SpacePoint;
-vector<SpacePoint> pointCloud;
+	cout<<" PLY format of point cloud generated .. check bin folder "<< endl;
 
-ofstream output("pointcloud.ply");
-output << "ply\n" << "format ascii 1.0\n" << "comment VTK generated PLY File\n";
-output << "obj_info vtkPolyData points and polygons : vtk4.0\n" << "element vertex " << cloud->points.size(); << "\n";
-output << "property float x\n" << "property float y\n" << "property float z\n" << "element face 0\n";
-output << "property list uchar int vertex_indices\n" << "end_header\n";
-for (int i = 0; i < pointCloud.size(); i++)
-{
-    Point3d point = pointCloud.at(i).point;
-    output << point.x << " ";
-    output << point.y << " ";
-    output << point.z << " ";
-    output << "\n";
-}
-outfile.close();*/
+	/* Visualize the pointcloud using PCLVisualizer */
+	 pcl::visualization::PCLVisualizer::Ptr viewer;
+	
+	 viewer=createViewer(cloud); 
+
+    while (!viewer->wasStopped()) 
+    { 
+        viewer->spinOnce(100); 
+        boost::this_thread::sleep (boost::posix_time::microseconds (100000)); 
+    } 
+	viewer->close();
+		
+
+
+
 	 // Clear the data and save
 	cloud->points.clear();
 	cout<< "Point cloud saved." << endl;
+
+
+
 	return 0;
 }

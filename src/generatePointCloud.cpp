@@ -20,9 +20,6 @@ using namespace std;
  // Define the point cloud type
 typedef pcl::PointXYZRGBA PointT;
 typedef pcl::PointCloud<PointT> PointCloud; 
-//struct dataType { std::vector<Point3f> point; int red; int green; int blue; };
-//typedef dataType SpacePoint;
-//vector<SpacePoint> pointCloud;
 
  // camera internal reference
 const double camera_factor=5000;
@@ -32,7 +29,7 @@ const double camera_fx=518.0;
 const double camera_fy=519.0;
 
 //function prototype
-pcl::visualization::PCLVisualizer::Ptr createViewer (pcl::PointCloud<pcl::PointXYZ>::ConstPtr);  
+pcl::visualization::PCLVisualizer::Ptr createViewer (pcl::PointCloud<pcl::PointXYZRGBA>::ConstPtr);  
 
  // main function
 int main(int argc,char** argv)
@@ -96,13 +93,11 @@ int main(int argc,char** argv)
 	viewer->close();
 		
 
-
+/*pcl::visualization::CloudViewer viewer1 ("Simple Cloud Viewer");
+viewer1.showCloud (cloud);*/
 
 	 // Clear the data and save
 	cloud->points.clear();
 	cout<< "Point cloud saved." << endl;
-
-
-
 	return 0;
 }
